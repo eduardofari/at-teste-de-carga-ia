@@ -84,14 +84,16 @@ public class SeleniumUtils {
     }
 
     public static boolean elementClickable(String xpath) {
+        boolean status = false;
+        WebDriverWait wait = new WebDriverWait(WebDriverFactory.getCurrentRunningDriver(), timeToBrooke);
         try {
-            WebDriverWait wait = new WebDriverWait(WebDriverFactory.getCurrentRunningDriver(), timeToBrooke);
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-            return true;
+            status = true;
         } catch (Exception exception) {
-            return false;
+            //silent
             //   ExceptionUtils.throwException(exception);
         }
+        return status;
 
     }
 
@@ -216,7 +218,8 @@ public class SeleniumUtils {
         System.out.println("SCROLL DOWN");
     }
 
-    public void scroolPositivo() {
+    public static void scroolPositivo() {
+        WebDriver driver = WebDriverFactory.getCurrentRunningDriver();
         JavascriptExecutor jsP;
         jsP = (JavascriptExecutor) driver;
         jsP.executeScript("scrollBy(0, 550)", "");

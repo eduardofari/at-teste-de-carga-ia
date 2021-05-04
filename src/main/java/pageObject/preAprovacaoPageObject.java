@@ -47,11 +47,14 @@ public class preAprovacaoPageObject {
     @FindBy
     private String consolidacao = "(//a[contains(.,'Consolidação')])[1]";
 
+    @FindBy
+    private String auditoria = "//a[contains(.,'Auditoria Inicial')]";
+
     public void auditoriaInicial() {
         try {
-            camposController.CampoClick(consolidacao, "Consolidação");
+            camposController.CampoClick(auditoria, "Auditoria");
         } catch (Exception e) {
-            Inspecionador.TipoTeste("erro", "Não foi possivel acessar auditoria inicial \n" + e, "final");
+            Inspecionador.TipoTeste("erro", "Não foi possível acessar auditoria inicial \n" + e, "final");
         }
     }
 
@@ -82,7 +85,7 @@ public class preAprovacaoPageObject {
     }
 
     @FindBy
-    public String telaHistoricoRisco = "//*[@id='divHistRisco']/table";
+    public String telaHistoricoRisco = "//*[@id='divHistRisco']";
     @FindBy
     public String abaHistRisco = "//td[@id='td_hist_risco']";
 
@@ -97,9 +100,35 @@ public class preAprovacaoPageObject {
 
     @FindBy
     public String cdDentisaAprovacao = "//input[@id='cdCirDentista']";
-
     @FindBy
     public String senhaLiberada = "//input[@name='senhaLiberada']";
+    @FindBy
+    public String numGto = "//input[@id='numeroDaGuia']";
+
+
+    public void validarGTO() {
+        try {
+            camposController.CampoView(false, "", numGto, "GTO");
+            WebElement nr_ficha = SeleniumUtils.getWebElement(numGto);
+            String nr_FichaValue = nr_ficha.getAttribute("value");
+
+            camposController.CampoView(false, "", cdDentisaAprovacao, "Dentista");
+            WebElement codDentista = SeleniumUtils.getWebElement(cdDentisaAprovacao);
+            String dentistaValue = codDentista.getAttribute("value");
+
+            camposController.CampoView(false, "", senhaLiberada, "Senha do Protocolo");
+            WebElement txtSenha = SeleniumUtils.getWebElement(senhaLiberada);
+            String senhaValue = txtSenha.getAttribute("value");
+
+            camposController.CampoClick(abaHistRisco, "Aba Histórico de Risco");
+            SeleniumUtils.waitWebElementVisible(telaHistoricoRisco);
+            camposController.CampoView(false, "", telaHistoricoRisco, "Histórico de Risco");
+
+            gerarArquivoCSV.arquivoCsvDentistaSenhaProtocolo(nr_FichaValue, dentistaValue, senhaValue.trim());
+        } catch (Exception e) {
+            Inspecionador.TipoTeste("erro", "Não foi possível validar os dados da GTO \n" + e, "final");
+        }
+    }
 
     public void senhaProtocolo(String protocolo, String dentista) {
         try {
@@ -115,48 +144,48 @@ public class preAprovacaoPageObject {
             WebElement txtSenha = SeleniumUtils.getWebElement(senhaLiberada);
             String senhaValue = txtSenha.getAttribute("value");
 
-            if (dentistaValue.equals(dentista)) {
-                switch (cor) {
-                    case "background-color: rgb(102, 255, 102)":
-                        if (protocolo.equals("1")) {
-                            Inspecionador.TipoTeste("sucesso", "Protocolo Alfa: " + cor, "meio");
-                        } else {
-                            //   Inspecionador.TipoTeste("erro", "Protocolo Alfa: " + cor, "final");
-                        }
-                        break;
-                    case "background-color: rgb(255,255,0)":
-                        if (protocolo.equals("2")) {
-                            Inspecionador.TipoTeste("sucesso", "Protocolo Beta: " + cor, "meio");
-                        } else {
-                            //   Inspecionador.TipoTeste("erro", "Protocolo Beta: " + cor, "final");
-                        }
-                        break;
-                    case "background-color: rgb(255, 0, 0)":
-                        if (protocolo.equals("4")) {
-                            Inspecionador.TipoTeste("sucesso", "Protocolo Zeta: " + cor, "meio");
-                        } else {
-                            //     Inspecionador.TipoTeste("erro", "Protocolo Zeta: " + cor, "final");
-                        }
-                        break;
-                    case "background-color: rgb(66, 170, 255)":
-                        if (protocolo.equals("5")) {
-                            Inspecionador.TipoTeste("sucesso", "Protocolo Gama: " + cor, "meio");
-                        } else {
-                            //    Inspecionador.TipoTeste("erro", "Protocolo Gama: " + cor, "final");
-                        }
-                        break;
-                }
+            // if (dentistaValue.equals(dentista)) {
+            switch (cor) {
+                case "background-color: rgb(102, 255, 102)":
+                    if (protocolo.equals("1")) {
+                        Inspecionador.TipoTeste("sucesso", "Protocolo Alfa: " + cor, "meio");
+                    } else {
+                        //   Inspecionador.TipoTeste("erro", "Protocolo Alfa: " + cor, "final");
+                    }
+                    break;
+                case "background-color: rgb(255,255,0)":
+                    if (protocolo.equals("2")) {
+                        Inspecionador.TipoTeste("sucesso", "Protocolo Beta: " + cor, "meio");
+                    } else {
+                        //   Inspecionador.TipoTeste("erro", "Protocolo Beta: " + cor, "final");
+                    }
+                    break;
+                case "background-color: rgb(255, 0, 0)":
+                    if (protocolo.equals("4")) {
+                        Inspecionador.TipoTeste("sucesso", "Protocolo Zeta: " + cor, "meio");
+                    } else {
+                        //     Inspecionador.TipoTeste("erro", "Protocolo Zeta: " + cor, "final");
+                    }
+                    break;
+                case "background-color: rgb(66, 170, 255)":
+                    if (protocolo.equals("5")) {
+                        Inspecionador.TipoTeste("sucesso", "Protocolo Gama: " + cor, "meio");
+                    } else {
+                        //    Inspecionador.TipoTeste("erro", "Protocolo Gama: " + cor, "final");
+                    }
+                    break;
+                //     }
             }
-            gerarArquivoCSV.arquivoCsvDentistaSenhaProtocolo(dentistaValue, senhaValue.trim());
+            gerarArquivoCSV.arquivoCsvDentistaSenhaProtocolo("GTO", dentistaValue, senhaValue.trim());
         } catch (Exception e) {
             Inspecionador.TipoTeste("erro", "Não foi possível validar a senha do protocolo \n" + e, "final");
         }
     }
 
-    public void validarImagemPreAprovacao(){
-        try{
+    public void validarImagemPreAprovacao() {
+        try {
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Inspecionador.TipoTeste("erro", "Não foi possível validar Imagem da GTO \n" + e, "final");
         }
     }
@@ -164,6 +193,18 @@ public class preAprovacaoPageObject {
     @FindBy
     public String btnConsolidar = "//input[contains(@name,'consolidar')]";
 
+
+
+    public void Confirmar() {
+        try {
+
+          //  SeleniumUtils.waitAlertAccept();
+        //    Inspecionador.TipoTeste("sucesso", "Teste finalizado com sucesso", "final");
+
+        } catch (Exception e) {
+            Inspecionador.TipoTeste("erro", "Não foi possível clicar em Confirmar \n" + e, "final");
+        }
+    }
     public void Consolidar() {
         try {
             camposController.CampoClick(btnConsolidar, "Botão Consolidação");
@@ -175,4 +216,3 @@ public class preAprovacaoPageObject {
         }
     }
 }
-//Teste

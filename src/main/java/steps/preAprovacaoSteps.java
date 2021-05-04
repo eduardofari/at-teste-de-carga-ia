@@ -1,13 +1,17 @@
 package steps;
 
 import Standard.factory.UrlAccess;
+import Standard.inspect.CamposController;
+import Standard.inspect.Inspecionador;
 import Standard.utils.evidencia.Evidencia;
 import Standard.utils.others.GerarArquivoCSV;
+import Standard.utils.others.SeleniumUtils;
 import Standard.utils.selenium.audiUtil;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Então;
 import cucumber.api.java.pt.Quando;
+import org.openqa.selenium.support.FindBy;
 import pageObject.preAprovacaoPageObject;
 
 import java.io.IOException;
@@ -18,6 +22,7 @@ public class preAprovacaoSteps {
     private preAprovacaoPageObject audit = new preAprovacaoPageObject();
     private audiUtil util = new audiUtil();
     private GerarArquivoCSV arqCsv = new GerarArquivoCSV();
+    CamposController camposController = new CamposController();
 
     String ultimaGto;
 
@@ -54,22 +59,49 @@ public class preAprovacaoSteps {
     }
 
     @Quando("validar o campo histórico risco")
-    public void validarOCampoHistóricoRisco() {
+    public void validarOCampoHistoricoRisco() {
         audit.historicoRisco();
     }
 
-   /* @E("a senha apresentada no campo senha")
+    @E("a senha apresentada no campo senha")
     public void aSenhaApresentadaNoCampoSenha() {
-        audit.senhaProtocolo();
-    }*/
+        audit.validarGTO();
+
+    }
 
     @Então("deve ser clicado no botão confirmar")
     public void deve_ser_clicado_no_botao_confirmar() {
-        audit.Consolidar();
+        audit.Confirmar();
+        //  audit.Consolidar();
     }
 
     @E("validar o protocolo {string} do {string}")
     public void validarOProtocoloDoDentista(String protocolo, String dentista) {
         audit.senhaProtocolo(protocolo, dentista);
+    }
+
+    @FindBy
+    public String btnConfirmar = "//input[@value='Confirmar']";
+
+    @Então("validar fila Auditoria")
+    public void validarFilaAuditoria() {
+        SeleniumUtils.switchJanela();
+       // audit.alert();
+        while (!util.isAlert()) {
+            audit.validarGTO();
+            SeleniumUtils.scroolPositivo();
+            camposController.CampoClick(btnConfirmar, "Botão Confirmar");
+        }
+        if (SeleniumUtils.isAlert()) {
+            if (SeleniumUtils.getTextoAlert().equals("Não existem fichas à serem Auditadas.")) {
+                Inspecionador.TipoTeste("sucesso", "Não há mais filtro: " + SeleniumUtils.getTextoAlert(), "final");
+            }else{
+                Inspecionador.TipoTeste("falha", "Um Alert foi apresentado: " + SeleniumUtils.getTextoAlert(), "final");
+                SeleniumUtils.alertAccept();
+                validarFilaAuditoria();
+            }
+        } else {
+            validarFilaAuditoria();
+        }
     }
 }

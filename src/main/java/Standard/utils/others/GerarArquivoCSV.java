@@ -77,7 +77,7 @@ public class GerarArquivoCSV {
         }
     }
 
-    public void arquivoCsvDentistaSenhaProtocolo(String dentista, String senhaProt) {
+    public void arquivoCsvDentistaSenhaProtocolo(String gto, String dentista, String senhaProt) {
         File arquivo = new File("Dados Dentista e Senha Protocolo.csv");
         try {
             if (!arquivo.exists()) {

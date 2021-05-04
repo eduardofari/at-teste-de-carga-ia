@@ -34,7 +34,7 @@ Funcionalidade: Testes de Carga para liberação de Senha e consulta de GTO
 
     Exemplos:
       | CD_CIR_DENTISTA | SENHA    | ID_PROTOCOLO | CD_ASSOCIADO | CD_EVENTO  |
-      | 334239          | 12345678 |              | 1656680      | 85.100.102 |
+    #  | 334239          | 12345678 |              | 1656680      | 85.100.102 |
       | W21903          | 12345678 | 4            | 1259710      | 82.000.786 |
       | 274377          | 12345678 | 4            | 1259711      | 82.000.794 |
       | C11001          | 48472825 | 4            | 1259760      | 82.000.808 |

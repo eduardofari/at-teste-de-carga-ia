@@ -75,7 +75,7 @@ public class UrlAccess {
             }
             Inspecionador.TipoTeste("sucesso", "Portal Online", "inicial");
         } catch (Exception e) {
-            Inspecionador.TipoTeste("erro", "Não foi possivel acessar o " + tipoPortal_Sistema +
+            Inspecionador.TipoTeste("erro", "Não foi possível acessar o " + tipoPortal_Sistema +
                     ": " + nomePortal_Sistema + " " + cenario + "\n " + e, "final");
         }
     }

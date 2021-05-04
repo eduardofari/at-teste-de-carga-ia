@@ -8,6 +8,9 @@ import Standard.utils.services.APIUploader_Imagem_IA;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 public class liberacaoDeSenhaRedeUnnaPageObject {
 
     private final CamposController camposController = new CamposController();
@@ -200,12 +203,13 @@ public class liberacaoDeSenhaRedeUnnaPageObject {
     public String eventoDent = "//*[@id='cboDenteRegiao']/option[2]";
     @FindBy
     public String btnOkEvento = "//input[@value='Ok'][2]";
-
     //*[@id='btnAtualizarDenteRegiao']
     @FindBy
     public String denteRegiao = "//input[contains(@id,'local1')]";
+
+
     @FindBy
-    public String face = "//input[contains(@id,'face1')]";
+    public String face = "//input[@id='face1']";
     @FindBy
     public String face1 = "//input[@id='checkOclusal']";
     @FindBy
@@ -221,35 +225,44 @@ public class liberacaoDeSenhaRedeUnnaPageObject {
     @FindBy
     public String btnOkFace = "//*[@id='btnAtualizarFace']";
 
-    public void inserirEventos(String evento) {
+    public void inserirEventos(String evento) throws AWTException {
+        Robot robot = new Robot();
+
         try {
+
             camposController.CampoSend(evento, codEvento, "Evento");
             camposController.CampoClick(descricao, "Descrição");
-            utils.wait(2000);
-            if (SeleniumUtils.elementClickable(denteRegiao)) {
-                //camposController.CampoClick(denteRegiao, "Dente/Região");
-               // camposController.CampoClick(selecEvento, "Selecionar Evento");
-                utils.wait(2000);
-                camposController.CampoClick(eventoDent, "Evento Dente");
-                utils.wait(5000);
-                camposController.CampoClick(btnOkEvento, "Botão Ok");
-                utils.wait(2000);
-            } else if (SeleniumUtils.elementClickable(face)) {
-                camposController.CampoClick(face1, "Face 1");
-                utils.wait(2000);
-                camposController.CampoClick(face2, "Face 2");
-                utils.wait(2000);
-                camposController.CampoClick(face3, "Face 3");
-                utils.wait(2000);
-                camposController.CampoClick(face4, "Face 4");
-                utils.wait(2000);
-                camposController.CampoClick(face5, "Face 5");
-                utils.wait(2000);
-                camposController.CampoClick(btnOkFace, "Botão Ok");
-                utils.wait(2000);
+
+            utils.scroolPositivo();
+
+            SeleniumUtils.wait(2000);
+
+            camposController.CampoClick(denteRegiao, "Dente/Região");
+
+            camposController.CampoSend_("11", denteRegiao, "Dente/Região");
+            if (SeleniumUtils.isAlert()) {
+                SeleniumUtils.alertAccept();
+                camposController.CampoSend("AS", denteRegiao, "Dente/Região");
             }
+
+            SeleniumUtils.wait(5000);
+            robot.keyPress(KeyEvent.VK_TAB);
+            robot.keyRelease(KeyEvent.VK_TAB);
+            SeleniumUtils.wait(2000);
+
+            System.out.println("FACE - IF");
+
+            camposController.CampoSend_("OV", face, "Face");
+            System.out.println("OV - DIGITADO");
+            SeleniumUtils.wait(5000);
+            robot.keyPress(KeyEvent.VK_TAB);
+            robot.keyRelease(KeyEvent.VK_TAB);
+            SeleniumUtils.wait(2000);
+
+            SeleniumUtils.wait(2000);
+            //    }
         } catch (Exception e) {
-            Inspecionador.TipoTeste("erro", "Não foi possivel inserir eventos no campo " + e, "final");
+            Inspecionador.TipoTeste("erro", "Não foi possível inserir eventos no campo " + e, "final");
         }
     }
 
@@ -260,7 +273,7 @@ public class liberacaoDeSenhaRedeUnnaPageObject {
         try {
             camposController.CampoClick(btnAddEventos, "Adicionar Eventos");
         } catch (Exception e) {
-            Inspecionador.TipoTeste("falha", "Não foi possivel adicionar eventos " + e, "meio");
+            Inspecionador.TipoTeste("falha", "Não foi possível adicionar eventos " + e, "meio");
         }
     }
 

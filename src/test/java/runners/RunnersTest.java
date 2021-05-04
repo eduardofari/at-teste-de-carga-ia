@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         strict = true,
         features = {"classpath:features"},
         glue = {"classpath:steps"},
-        tags = {"@Regressivo"}
+        tags = {"@preAprovacao"}
 )
 public class RunnersTest {
 

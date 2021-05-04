@@ -2,6 +2,7 @@ package Standard.inspect;
 
 import Standard.factory.WebDriverFactory;
 import Standard.utils.others.SeleniumUtils;
+import Standard.utils.selenium.CssIterator;
 import Standard.utils.selenium.audiUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -9,7 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import Standard.utils.selenium.CssIterator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,11 +43,11 @@ public class CamposController {
                 WebElement webElement = SeleniumUtils.getWebElement(xpathCampo);
                 WebDriver driver = WebDriverFactory.getCurrentRunningDriver();
                 CssIterator.markWebElement(webElement);
-                Inspecionador.TipoTeste("sucesso", "Campo validado", "meio");
+                Inspecionador.TipoTeste("sucesso", "Campo validado: " +NmCampo , "meio");
                 CssIterator.markOffWebElement(driver, webElement);
             }
         } catch (Exception e) {
-            Inspecionador.TipoTeste("falha", "Campo não encontrado", "final");
+            Inspecionador.TipoTeste("falha", "Campo não encontrado: "+ NmCampo, "final");
         }
     }
 
@@ -215,10 +215,11 @@ public class CamposController {
             return false;
         }
     }
+
     public boolean elementExistDisplay_(String xpath) {
-            WebDriver driver = WebDriverFactory.getCurrentRunningDriver();
-            WebElement elemento = driver.findElement(By.xpath(xpath));
-            return elemento.isDisplayed();
+        WebDriver driver = WebDriverFactory.getCurrentRunningDriver();
+        WebElement elemento = driver.findElement(By.xpath(xpath));
+        return elemento.isDisplayed();
     }
 
     public boolean elementExistsAndIsDisplay_Id(String var) {
@@ -294,7 +295,7 @@ public class CamposController {
             cod.click();
         } catch (Exception e) {
             String erro = "Não foi possível clicar no campo: " + nmCampo.toUpperCase();
-            Inspecionador.TipoTeste("falha", erro + " " + e, "meio");
+            Inspecionador.TipoTeste("falha", erro + " " + e, "final");
         }
     }
 
@@ -375,6 +376,28 @@ public class CamposController {
         } catch (Exception e) {
             String erro = "Não foi possivel inserir dados no campo: " + nmCampo.toUpperCase();
             Inspecionador.TipoTeste("falha", erro + " " + e, "final");
+        }
+    }
+    public void CampoSend_(String dados, String xpathCampo, String nmCampo) {
+        try {
+            SeleniumUtils.isWebElement(xpathCampo);
+            WebElement cod = SeleniumUtils.getWebElement(xpathCampo);
+            WebElement webElement = SeleniumUtils.getWebElement(xpathCampo);
+            WebDriver driver = WebDriverFactory.getCurrentRunningDriver();
+            if (cod.getAttribute("value") == null || " ".equals(cod.getAttribute("value").trim())
+                    || "".equals(cod.getAttribute("value").trim())) {
+                cod.sendKeys(dados);
+                CssIterator.markWebElement(webElement);
+                Inspecionador.TipoTeste("sucesso",
+                        "Realizada a ação de inserir dados no campo '" + nmCampo.toUpperCase() + "' ", "meio");
+                CssIterator.markOffWebElement(driver, webElement);
+            } else {
+                Inspecionador.TipoTeste("falha",
+                        "O campo '" + nmCampo.toUpperCase() + "' não pode ser editado, já está preenchido", "final");
+            }
+        } catch (Exception e) {
+            String erro = "Não foi possível inserir dados no campo: " + nmCampo.toUpperCase();
+            Inspecionador.TipoTeste("falha", " - Elemento não selecionável", "meio");
         }
     }
 

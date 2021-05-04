@@ -11,12 +11,13 @@ Funcionalidade: Consulta de GTO
 
     Dado que acessei o "<Sistema_Portal>" "<NM_Portal>" "<Cenario>" e realizei o Login
     Quando clicado na aba ficha clinica e acessado consolidacao
-   # E aceitar o alert
-    E digitado o numero da gto no campo nr ficha
-    Quando validar o campo histórico risco
+    Então validar fila Auditoria
+  #  E aceitar o alert
+   # E digitado o numero da gto no campo nr ficha
    # E a senha apresentada no campo senha
-    E validar o protocolo "<PROTOCOLO>" e clicar em ok
-    Então deve ser clicado no botão confirmar
+   # E validar o protocolo "<PROTOCOLO>" e clicar em ok
+   # Quando validar o campo histórico risco
+  #  Então deve ser clicado no botão confirmar
 
 
     Exemplos:

@@ -12,6 +12,7 @@ import cucumber.api.java.pt.Quando;
 import pageObject.liberacaoDeSenhaRedeUnnaPageObject;
 import pageObject.preAprovacaoPageObject;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class liberacaoDeSenhaRedeUnnaSteps {
@@ -116,7 +117,7 @@ public class liberacaoDeSenhaRedeUnnaSteps {
     }
 
     @Quando("capturado o numero da gto inserir eventos {string} e salvar em um arquivo csv")
-    public void capturado_o_numero_da_gto_inserir_eventos_e_salvar_em_um_arquivo_csv2(String evento) {
+    public void capturado_o_numero_da_gto_inserir_eventos_e_salvar_em_um_arquivo_csv2(String evento) throws AWTException {
         this.evento = evento;
         this.numGto = libSenha.pegarGto();
         libSenha.confirmarMsgGto();
