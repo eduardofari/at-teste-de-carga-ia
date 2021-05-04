@@ -1,0 +1,11 @@
+[0814/111635.494:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
+[1112/100709.505:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[1112/164656.945:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[1118/135549.341:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[1119/121608.583:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[1119/130511.804:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[1119/130511.805:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[1119/130511.806:ERROR:exception_snapshot_win.cc(98)] thread ID 9196 not found in process
+[0214/110217.861:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[0428/120304.046:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
+[0504/150928.163:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
