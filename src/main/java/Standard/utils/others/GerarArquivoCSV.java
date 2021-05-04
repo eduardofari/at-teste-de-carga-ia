@@ -85,7 +85,7 @@ public class GerarArquivoCSV {
                 arquivo.createNewFile();
             }
             List<String[]> linhas = new ArrayList<>();
-            linhas.add(new String[]{dentista, senhaProt});
+            linhas.add(new String[]{gto,dentista, senhaProt});
             //escreve no arquivo
             FileWriter fw = new FileWriter(arquivo, true);
             BufferedWriter bw = new BufferedWriter(fw);

@@ -1,6 +1,7 @@
 package steps;
 
 import Standard.factory.UrlAccess;
+import Standard.factory.WebDriverFactory;
 import Standard.inspect.CamposController;
 import Standard.inspect.Inspecionador;
 import Standard.utils.evidencia.Evidencia;
@@ -44,6 +45,8 @@ public class preAprovacaoSteps {
     public void clicadoNaAbaFichaClinicaEAcessadoConsolidacao() throws IOException {
         audit.fichaClinica();
         audit.auditoriaInicial();
+        SeleniumUtils.switchJanela();
+
     }
 
     @E("aceitar o alert")
@@ -82,26 +85,41 @@ public class preAprovacaoSteps {
 
     @FindBy
     public String btnConfirmar = "//input[@value='Confirmar']";
+    @FindBy
+    public String jnlConfirma = "(//div[contains(.,'Escolha a opção desejada!close')])[2]";
+    @FindBy
+    public String btnConfirmarAuditoria = "//span[contains(.,'Confirmar Auditoria')]";
+    @FindBy
+    public String jnlConfirma_ = "//div[@class='ui-dialog-titlebar  ui-widget-header  ui-corner-all  ui-helper-clearfix'][contains(.,'Escolha a opção desejada!close')]";
 
     @Então("validar fila Auditoria")
     public void validarFilaAuditoria() {
-        SeleniumUtils.switchJanela();
-       // audit.alert();
-        while (!util.isAlert()) {
-            audit.validarGTO();
-            SeleniumUtils.scroolPositivo();
-            camposController.CampoClick(btnConfirmar, "Botão Confirmar");
-        }
-        if (SeleniumUtils.isAlert()) {
-            if (SeleniumUtils.getTextoAlert().equals("Não existem fichas à serem Auditadas.")) {
-                Inspecionador.TipoTeste("sucesso", "Não há mais filtro: " + SeleniumUtils.getTextoAlert(), "final");
-            }else{
-                Inspecionador.TipoTeste("falha", "Um Alert foi apresentado: " + SeleniumUtils.getTextoAlert(), "final");
-                SeleniumUtils.alertAccept();
+        try {
+            //  SeleniumUtils.waitAlertPresent();
+
+            if (SeleniumUtils.isAlertPresent()) {
+                String textAlert = WebDriverFactory.getCurrentRunningDriver().switchTo().alert().getText();
+                if (textAlert.equals("Não existem fichas à serem Auditadas.") ||
+                        textAlert.equals("Não existem fichas à serem Auditadas") ||
+                        textAlert.equals("Alert text : Não existem fichas à serem Auditadas.")) {
+                    Inspecionador.TipoTeste("sucesso", "Não há mais filtro: " + textAlert, "final");
+                    SeleniumUtils.alertAccept();
+                } else {
+                    Inspecionador.TipoTeste("falha", "Um Alert foi apresentado: " + SeleniumUtils.getTextoAlert(), "final");
+                    SeleniumUtils.alertAccept();
+                    validarFilaAuditoria();
+                }
+            } else {
+                audit.validarGTO();
+                SeleniumUtils.scroolPositivo();
+                camposController.CampoClick(btnConfirmar, "Botão Confirmar");
+                if (SeleniumUtils.isWebElement(jnlConfirma) || SeleniumUtils.isWebElement(jnlConfirma_)) {
+                    camposController.CampoClick(btnConfirmarAuditoria, "Botão Confirmar Auditoria");
+                }
                 validarFilaAuditoria();
             }
-        } else {
-            validarFilaAuditoria();
+        } catch (Exception e) {
+            Inspecionador.TipoTeste("erro", "Não foi possível validar a Fila: " + e, "final");
         }
     }
 }

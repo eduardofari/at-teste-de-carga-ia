@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumUtils {
+    private WebDriverWait wait;
 
     public WebDriver driver;
 
@@ -163,6 +164,17 @@ public class SeleniumUtils {
         WebDriverFactory.getCurrentRunningDriver().switchTo().alert().accept();
     }
 
+    public static boolean isAlertPresent() {
+        boolean status = false;
+        try {
+            WebDriverWait wait = new WebDriverWait(WebDriverFactory.getCurrentRunningDriver(), timeToBrooke);
+            wait.until(ExpectedConditions.alertIsPresent());
+            status = true;
+        } catch (Exception exception) {
+         //Silent
+        }
+        return status;
+    }
     public static void waitAlertAccept() {
         waitAlertPresent();
         WebDriverFactory.getCurrentRunningDriver().switchTo().alert().accept();

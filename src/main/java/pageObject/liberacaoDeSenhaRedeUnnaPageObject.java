@@ -1,15 +1,17 @@
 package pageObject;
 
+import Standard.factory.WebDriverFactory;
 import Standard.inspect.CamposController;
 import Standard.inspect.Inspecionador;
 import Standard.utils.others.GerarArquivoCSV;
 import Standard.utils.others.SeleniumUtils;
 import Standard.utils.services.APIUploader_Imagem_IA;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class liberacaoDeSenhaRedeUnnaPageObject {
 
@@ -226,14 +228,13 @@ public class liberacaoDeSenhaRedeUnnaPageObject {
     public String btnOkFace = "//*[@id='btnAtualizarFace']";
 
     public void inserirEventos(String evento) throws AWTException {
-        Robot robot = new Robot();
-
+        Actions robot = new Actions(WebDriverFactory.getCurrentRunningDriver());
         try {
 
             camposController.CampoSend(evento, codEvento, "Evento");
             camposController.CampoClick(descricao, "Descrição");
 
-            utils.scroolPositivo();
+            SeleniumUtils.scroolPositivo();
 
             SeleniumUtils.wait(2000);
 
@@ -246,19 +247,16 @@ public class liberacaoDeSenhaRedeUnnaPageObject {
             }
 
             SeleniumUtils.wait(5000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
+
+            robot.sendKeys(Keys.TAB);
+
             SeleniumUtils.wait(2000);
 
             System.out.println("FACE - IF");
-
             camposController.CampoSend_("OV", face, "Face");
             System.out.println("OV - DIGITADO");
             SeleniumUtils.wait(5000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
-            SeleniumUtils.wait(2000);
-
+            robot.sendKeys(Keys.TAB);
             SeleniumUtils.wait(2000);
             //    }
         } catch (Exception e) {

@@ -10,16 +10,16 @@ Funcionalidade: Testes de Carga para liberação de Senha e consulta de GTO
 
   Esquema do Cenario: Cenario: Liberação de Senha Rede Unna
 
- #Dado que acessei o portal rede unna e realizei o Login
+ # Dado que acessei o portal rede unna e realizei o Login
     Dado que realizei o login com "<CD_CIR_DENTISTA>" e "<SENHA>"
     Quando clicado na opção Solicitação autorização e confirmado o pop-up
     E selecionado uma especialidade e clicado em confirmar
- #E inserido o telefone e codigo do beneficiario e clicado em consultar e selecionar
+ # E inserido o telefone e codigo do beneficiario e clicado em consultar e selecionar
     E inserido o telefone e codigo do beneficiario "<CD_ASSOCIADO>" e clicado em consultar e selecionar
- #Então validar o protocolo e clicar em ok
+ # Então validar o protocolo e clicar em ok
     Então validar o protocolo "<ID_PROTOCOLO>" e clicar em ok
-    Quando capturado o numero da gto inserir eventos "<CD_EVENTO>" e salvar em um arquivo csv
-  #Quando capturado o numero da gto inserir eventos e salvar em um arquivo csv
+    Quando capturado o numero da gto inserir eventos "<CD_EVENTO>"
+ # Quando capturado o numero da gto inserir eventos e salvar em um arquivo csv
     Então deve ser clicado no botão enviar guia
 
   # ####  PRE APROVACAO ####
@@ -34,7 +34,7 @@ Funcionalidade: Testes de Carga para liberação de Senha e consulta de GTO
 
     Exemplos:
       | CD_CIR_DENTISTA | SENHA    | ID_PROTOCOLO | CD_ASSOCIADO | CD_EVENTO  |
-    #  | 334239          | 12345678 |              | 1656680      | 85.100.102 |
+      | 334239          | 12345678 | 2            | 1656680      | 85.100.102 |
       | W21903          | 12345678 | 4            | 1259710      | 82.000.786 |
       | 274377          | 12345678 | 4            | 1259711      | 82.000.794 |
       | C11001          | 48472825 | 4            | 1259760      | 82.000.808 |

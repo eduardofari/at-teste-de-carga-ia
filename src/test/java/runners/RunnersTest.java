@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         strict = true,
         features = {"classpath:features"},
         glue = {"classpath:steps"},
-        tags = {"@preAprovacao"}
+        tags = {"@LibSenhaUnna"}
 )
 public class RunnersTest {
 
