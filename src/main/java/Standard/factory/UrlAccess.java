@@ -57,10 +57,10 @@ public class UrlAccess {
             //String url = consumePropertiesAPI.getPropertiesURL();
             //*--------------------------------------------------*//*
 
-            //String urlRedeUnna = "https://testecarga.redeunna.com.br/dentista";
+            String urlRedeUnna = "https://testecarga.redeunna.com.br/dentista";
             String urlPreAprov = "https://testecarga.odontoprev.com.br/preaprovacaoauditoria";
 
-            String urlRedeUnna = "https://hml.redeunna.com.br/dentista/";
+            //String urlRedeUnna = "https://hml.redeunna.com.br/dentista/";
             //String urlPreAprov = "http://172.16.21.130/preaprovacaoauditoria/loginInterno.jsp";
 
 
