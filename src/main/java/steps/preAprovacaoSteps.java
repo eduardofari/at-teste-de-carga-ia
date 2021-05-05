@@ -14,6 +14,7 @@ import cucumber.api.java.pt.Então;
 import cucumber.api.java.pt.Quando;
 import org.openqa.selenium.support.FindBy;
 import pageObject.preAprovacaoPageObject;
+import java.lang.System;
 
 import java.io.IOException;
 
@@ -114,7 +115,9 @@ public class preAprovacaoSteps {
                 SeleniumUtils.scroolPositivo();
                 camposController.CampoClick(btnConfirmar, "Botão Confirmar");
                 if (SeleniumUtils.isWebElement(jnlConfirma) || SeleniumUtils.isWebElement(jnlConfirma_)) {
+                    System.out.println("Oi Estou aqui");
                     camposController.CampoClick(btnConfirmarAuditoria, "Botão Confirmar Auditoria");
+                    System.out.println("Estou aqui");
                 }
                 validarFilaAuditoria();
             }
