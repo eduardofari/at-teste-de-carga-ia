@@ -107,7 +107,7 @@ public class preAprovacao2Steps {
                 } else {
                     Inspecionador.TipoTeste("falha", "Um Alert foi apresentado: " + SeleniumUtils.getTextoAlert(), "final");
                     SeleniumUtils.alertAccept();
-                    validarFilaAuditoria();
+                    validarFilaAuditoria2();
                 }
             } else {
                 audit.validarGTO();
@@ -116,7 +116,7 @@ public class preAprovacao2Steps {
                 if (SeleniumUtils.isWebElement(jnlConfirma) || SeleniumUtils.isWebElement(jnlConfirma_)) {
                     camposController.CampoClick(btnConfirmarAuditoria, "Botão Confirmar Auditoria");
                 }
-                validarFilaAuditoria();
+                validarFilaAuditoria2();
             }
         } catch (Exception e) {
             Inspecionador.TipoTeste("erro", "Não foi possível validar a Fila: " + e, "final");
