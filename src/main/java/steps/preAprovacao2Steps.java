@@ -114,7 +114,9 @@ public class preAprovacao2Steps {
                 SeleniumUtils.scroolPositivo();
                 camposController.CampoClick(btnConfirmar, "Botão Confirmar");
                 if (SeleniumUtils.isWebElement(jnlConfirma)) {
-                    camposController.CampoClick(btnConfirmarAuditoria, "Botão Confirmar Auditoria");
+                    SeleniumUtils.wait(1000);
+                    //camposController.CampoClick(btnConfirmarAuditoria, "Botão Confirmar Auditoria");
+                    validarFilaAuditoria2();
                 }
                 validarFilaAuditoria2();
             }
